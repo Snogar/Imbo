@@ -16,18 +16,22 @@ public class UserLogicManager : MonoBehaviour {
 	}
 
 	void Update () {
-		float moveFactor = Time.deltaTime * Me.instance.MVSpeed;
+		float moveFactor = Time.deltaTime * Me.instance.mvSpeed;
 		if(Input.GetKey(KeyCode.LeftArrow)) {
-			Me.instance.Move(Vector3.left * moveFactor);
+			Me.instance.Move(CustomVector2.left * moveFactor);
 		}
 		if(Input.GetKey(KeyCode.RightArrow)) {
-			Me.instance.Move(Vector3.right * moveFactor);
+			Me.instance.Move(CustomVector2.right * moveFactor);
 		}
 		if(Input.GetKey(KeyCode.UpArrow)) {
-			Me.instance.Move(Vector3.up * moveFactor);
+			Me.instance.Move(CustomVector2.up * moveFactor);
 		}
 		if(Input.GetKey(KeyCode.DownArrow)) {
-			Me.instance.Move(Vector3.down * moveFactor);
+			Me.instance.Move(CustomVector2.down * moveFactor);
 		}
+		if(Input.GetKey (KeyCode.Q)) {
+			Me.instance.UseSkill(0);
+		}
+		NetworkManager.instance.UpdateStatus((UserData)Me.instance);
 	}
 }

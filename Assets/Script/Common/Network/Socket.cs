@@ -33,9 +33,18 @@ public class Socket : MonoBehaviour {
 	}
 
 
+	public bool IsConnected() {
+		return this.client.IsConnected;
+	}
+
+	public void Emit(string uri, object data) {
+		this.client.Emit (uri, data);
+	}
+
+
+
 	private void SocketOpened (object sender, EventArgs e) {
 		Logger.Log ("Socket", "Socket Opened", LogColor.BLUE);
-		//this.client.Emit("debug/echo", sibural);
 	}
 
 	private void SocketMessage (object sender, MessageEventArgs e) { 
