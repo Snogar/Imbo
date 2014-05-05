@@ -11,30 +11,23 @@ public class UserLogicManager : MonoBehaviour {
 	}
 
 	void Start () {
-		Socket.instance.Initialize(); //TO BE MOVED -> At the beginning
-
-		UserManager.instance.Initialize(); //TO BE MOVED -> Login
-		UserUIManager.instance.RefreshPosition();
-	}
-
-	void OnDestroy() {
-		Socket.instance.Destroy(); //TO BE MOVED -> ..TO WHERE??
+		Me.instance.Initialize(); //TO BE MOVED -> Login
+		UserManager.instance.Initialize(); //TO BE MOVED -> Login, Currently doing nothing
 	}
 
 	void Update () {
-		float moveFactor = Time.deltaTime * Defines.MOVEMENT_SPEED;
+		float moveFactor = Time.deltaTime * Me.instance.MVSpeed;
 		if(Input.GetKey(KeyCode.LeftArrow)) {
-			UserManager.instance.Move(Vector3.left * moveFactor);
+			Me.instance.Move(Vector3.left * moveFactor);
 		}
 		if(Input.GetKey(KeyCode.RightArrow)) {
-			UserManager.instance.Move(Vector3.right * moveFactor);
+			Me.instance.Move(Vector3.right * moveFactor);
 		}
 		if(Input.GetKey(KeyCode.UpArrow)) {
-			UserManager.instance.Move(Vector3.up * moveFactor);
+			Me.instance.Move(Vector3.up * moveFactor);
 		}
 		if(Input.GetKey(KeyCode.DownArrow)) {
-			UserManager.instance.Move(Vector3.down * moveFactor);
+			Me.instance.Move(Vector3.down * moveFactor);
 		}
-
 	}
 }
