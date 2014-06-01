@@ -1,32 +1,32 @@
 using UnityEngine;
 using System.Collections;
 
-public class CustomVector2 {
+public class CVector2 {
 	public float x { get; set; }
 	public float y { get; set; }
 
-	public static CustomVector2 operator+ (CustomVector2 a, CustomVector2 b) {
-		return new CustomVector2(a.x + b.x, a.y + b.y);
+	public static CVector2 operator+ (CVector2 a, CVector2 b) {
+		return new CVector2(a.x + b.x, a.y + b.y);
 	}
 
-	public static CustomVector2 operator* (CustomVector2 a, float b) {
-		return new CustomVector2(a.x * b, a.y * b);
+	public static CVector2 operator* (CVector2 a, float b) {
+		return new CVector2(a.x * b, a.y * b);
 	}
 
-	public static CustomVector2 zero = new CustomVector2(0, 0);
-	public static CustomVector2 left = new CustomVector2(-1, 0);
-	public static CustomVector2 right = new CustomVector2(1, 0);
-	public static CustomVector2 up = new CustomVector2(0, 1);
-	public static CustomVector2 down = new CustomVector2(0, -1);
+	public static CVector2 zero = new CVector2(0, 0);
+	public static CVector2 left = new CVector2(-1, 0);
+	public static CVector2 right = new CVector2(1, 0);
+	public static CVector2 up = new CVector2(0, 1);
+	public static CVector2 down = new CVector2(0, -1);
 
 
 
-	public CustomVector2(float x, float y) {
+	public CVector2(float x, float y) {
 		this.x = x;
 		this.y = y;
 	}
 
-	public CustomVector2(Vector2 vector) {
+	public CVector2(Vector2 vector) {
 		this.x = vector.x;
 		this.y = vector.y;
 	}

@@ -6,9 +6,21 @@ public class UserData {
 	//UserData that send&receive via socket
 	public int hp { get; internal set; }
 	public int mp { get; internal set; }
-	public CustomVector2 position { get; internal set; }
+	public CVector2 position { get; internal set; }
 	public float mvSpeed { get; internal set; }
 	public List<Skill> skillList { get; internal set; }
+
+	public void UpdateData(UserData userData) {
+		this.hp = userData.hp;
+		this.mp = userData.mp;
+		this.position = userData.position;
+		this.mvSpeed = userData.mvSpeed;
+		if(userData.skillList != null) this.skillList = userData.skillList;
+	}
+
+	public virtual void UpdatePosition(CVector2 position) {
+		this.position = position;
+	}
 }
 
 
@@ -23,28 +35,37 @@ public class User : UserData {
 		this.sprite = gameObject.GetComponent<UISprite>();
 		this.sprite.gameObject.name = "User";
 
-		this.SetPosition(CustomVector2.zero);
-		this.hp = 100; 
-		this.mp = 100;
-		this.mvSpeed = 200.0f;
-		this.skillList = new List<Skill>();
-		this.skillList.Add(new Skill());
+		//
+		// TEST DATA
+		//
+		UserData testUserInitialData = new UserData();
+		testUserInitialData.position = CVector2.zero;
+		testUserInitialData.hp = 100;
+		testUserInitialData.mp = 100;
+		testUserInitialData.mvSpeed = 200.0f;
+		testUserInitialData.skillList = new List<Skill>();
+		testUserInitialData.skillList.Add (new Skill());
+
+		this.UpdateData(testUserInitialData);
+		//
+		//
+		//
 	}
 
-	public void SetPosition(CustomVector2 position) {
-		this.position = position;
+	public override void UpdatePosition(CVector2 position) {
+		base.UpdatePosition(position);
 		this.sprite.transform.localPosition = new Vector3(position.x, position.y, this.sprite.transform.localPosition.z);
 	}
 
-	public void Move(CustomVector2 moveVector) {
-		this.SetPosition (this.position + moveVector);
-	}
-
 	public void UseSkill(int skillNumber) {
+		Logger.Log ("DEBUG", skillNumber + "");
+		Logger.Log ("DEBUG", skillList.Count + "");
 		Skill usedSkill = skillList[skillNumber];
 		if(usedSkill.UseSkill()) {
-			GameObject gameObject = Util.CloneGameObject(PathSettings.RESOURCE_USER_SKILL, PathSettings.SCENE_BOSS_SKILL_PANEL, this.sprite.transform.localPosition);
-			IngameUIManager.instance.WaitAndDestroySpriteAnimation(gameObject.GetComponent<UISpriteAnimation>());
+			Logger.Log ("DEBUG", "USED SKILL");
+			EventManager.instance.AddUseSkillEvent(0);
+//			GameObject gameObject = Util.CloneGameObject(PathSettings.RESOURCE_USER_SKILL, PathSettings.SCENE_BOSS_SKILL_PANEL, this.sprite.transform.localPosition);
+//			IngameUIManager.instance.WaitAndDestroySpriteAnimation(gameObject.GetComponent<UISpriteAnimation>());
 		}
 	}
 }

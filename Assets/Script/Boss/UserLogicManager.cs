@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Enums;
 
 public class UserLogicManager : MonoBehaviour {
 	private static  UserLogicManager instance_   = null;
@@ -16,22 +17,33 @@ public class UserLogicManager : MonoBehaviour {
 	}
 
 	void Update () {
-		float moveFactor = Time.deltaTime * Me.instance.mvSpeed;
-		if(Input.GetKey(KeyCode.LeftArrow)) {
-			Me.instance.Move(CustomVector2.left * moveFactor);
+		bool keyLeft = Input.GetKey(KeyCode.LeftArrow);
+		bool keyRight = Input.GetKey(KeyCode.RightArrow);
+		bool keyUp = Input.GetKey(KeyCode.UpArrow);
+		bool keyDown = Input.GetKey(KeyCode.DownArrow);
+
+		Direction direction = Direction.NONE;
+		if(keyLeft) {
+			if(keyUp) direction = Direction.LU;
+			else if(keyDown) direction = Direction.LD;
+			else if(keyRight) direction = Direction.NONE;
+			else direction = Direction.L;
 		}
-		if(Input.GetKey(KeyCode.RightArrow)) {
-			Me.instance.Move(CustomVector2.right * moveFactor);
+		else if(keyRight) {
+			if(keyUp) direction = Direction.RU;
+			else if(keyDown) direction = Direction.RD;
+			else direction = Direction.R;
 		}
-		if(Input.GetKey(KeyCode.UpArrow)) {
-			Me.instance.Move(CustomVector2.up * moveFactor);
+		else if(keyDown) {
+			if(keyUp) direction = Direction.NONE;
+			else direction = Direction.D;
 		}
-		if(Input.GetKey(KeyCode.DownArrow)) {
-			Me.instance.Move(CustomVector2.down * moveFactor);
-		}
+		else if(keyUp) direction = Direction.U;
+
+		EventManager.instance.AddMoveEvent(direction);
+
 		if(Input.GetKey (KeyCode.Q)) {
 			Me.instance.UseSkill(0);
 		}
-		NetworkManager.instance.UpdateStatus((UserData)Me.instance);
 	}
 }

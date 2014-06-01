@@ -1,14 +1,7 @@
 ﻿using UnityEngine;
 using System.Text;
 using System.Collections;
-
-public enum LogColor {
-	NONE,
-	RED,
-	BLUE,
-	GREEN,
-	YELLOW
-}
+using Enums;
 
 public class Logger {
 	private const bool DEBUG_MODE = true;
